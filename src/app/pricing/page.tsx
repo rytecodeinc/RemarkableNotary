@@ -12,7 +12,7 @@ export default function PricingPage() {
     <div className="bg-paper text-ink">
       <SiteHeader variant="light" />
       <main className="container-rn py-16 md:py-24">
-        <p className="text-xs uppercase tracking-[0.22em] text-gold">Pricing</p>
+        <p className="text-xs uppercase tracking-[0.22em] text-brass">Pricing</p>
         <h1 className="mt-3 max-w-3xl font-display text-5xl md:text-6xl">
           One membership. Full curriculum. Two years.
         </h1>
@@ -38,7 +38,7 @@ export default function PricingPage() {
           </article>
 
           <aside className="rounded-[1.75rem] bg-ink p-8 text-ivory md:p-10">
-            <p className="text-xs uppercase tracking-[0.18em] text-gold">How access works</p>
+            <p className="text-xs uppercase tracking-[0.18em] text-brass">How access works</p>
             <ol className="mt-6 grid gap-5 text-sm leading-relaxed text-mist/85">
               <li>
                 <strong className="text-ivory">1. Create your account</strong>

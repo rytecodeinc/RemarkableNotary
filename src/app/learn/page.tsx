@@ -55,7 +55,7 @@ export default async function LearnHomePage() {
   return (
     <div className="grid gap-8">
       <section className="rounded-[1.5rem] bg-ink px-6 py-8 text-ivory md:px-8">
-        <p className="text-xs uppercase tracking-[0.2em] text-gold">Student dashboard</p>
+        <p className="text-xs uppercase tracking-[0.2em] text-brass">Student dashboard</p>
         <h1 className="mt-2 font-display text-4xl md:text-5xl">
           Welcome{profile.full_name ? `, ${profile.full_name}` : ""}
         </h1>

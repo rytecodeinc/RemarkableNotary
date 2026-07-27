@@ -21,8 +21,8 @@ export function SiteHeader({
           <span
             className={`grid h-10 w-10 place-items-center rounded-full border text-xs tracking-[0.18em] transition-colors ${
               dark
-                ? "border-white/20 group-hover:border-gold"
-                : "border-[var(--line-dark)] group-hover:border-gold"
+                ? "border-white/20 group-hover:border-brass"
+                : "border-[var(--line-dark)] group-hover:border-brass"
             }`}
           >
             RN
@@ -37,18 +37,18 @@ export function SiteHeader({
 
         <div className="flex items-center gap-4 sm:gap-7">
           <nav className="hidden items-center gap-7 text-sm md:flex">
-            <Link href="/#curriculum" className="opacity-80 transition hover:text-brick hover:opacity-100">
+            <Link href="/#curriculum" className="opacity-80 transition hover:opacity-100">
               Curriculum
             </Link>
-            <Link href="/pricing" className="opacity-80 transition hover:text-brick hover:opacity-100">
+            <Link href="/pricing" className="opacity-80 transition hover:opacity-100">
               Pricing
             </Link>
-            <Link href="/login" className="opacity-80 transition hover:text-brick hover:opacity-100">
+            <Link href="/login" className="opacity-80 transition hover:opacity-100">
               Log in
             </Link>
           </nav>
 
-          <Link href="/pricing" className="btn btn-primary">
+          <Link href="/pricing" className="btn btn-dark">
             Enroll
           </Link>
         </div>
@@ -68,7 +68,7 @@ export function SiteFooter() {
           </p>
         </div>
         <div>
-          <p className="text-xs uppercase tracking-[0.18em] text-gold">Explore</p>
+          <p className="text-xs uppercase tracking-[0.18em] text-brass">Explore</p>
           <div className="mt-4 grid gap-2 text-sm text-white/75">
             <Link href="/pricing" className="hover:text-white">Pricing</Link>
             <Link href="/login" className="hover:text-white">Student login</Link>
@@ -76,7 +76,7 @@ export function SiteFooter() {
           </div>
         </div>
         <div>
-          <p className="text-xs uppercase tracking-[0.18em] text-gold">Contact</p>
+          <p className="text-xs uppercase tracking-[0.18em] text-brass">Contact</p>
           <p className="mt-4 text-sm text-white/75">{SITE.domain}</p>
         </div>
       </div>

@@ -97,7 +97,7 @@ export default async function CoursePage({
                                 : "Not started"}
                           </span>
                         </span>
-                        <span className="text-xs uppercase tracking-[0.14em] text-gold">Open</span>
+                        <span className="text-xs uppercase tracking-[0.14em] text-brass">Open</span>
                       </Link>
                     </li>
                   );
