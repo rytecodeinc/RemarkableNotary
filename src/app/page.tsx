@@ -31,7 +31,7 @@ export default function HomePage() {
   return (
     <div className="bg-paper text-ink">
       <div className="relative min-h-[100svh] overflow-hidden">
-        <div className="absolute inset-0 hero-grid-overlay" />
+        <div className="absolute inset-0 hero-grid-overlay pointer-events-none" />
         <div className="relative">
           <SiteHeader variant="light" />
           <section className="container-wide grid items-start gap-10 pb-14 pt-8 md:grid-cols-[1.2fr_0.8fr] md:gap-12 md:pb-20 md:pt-10 lg:min-h-[calc(100svh-5rem)] lg:content-center">
