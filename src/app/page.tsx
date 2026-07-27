@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { EnrollButton } from "@/components/marketing/enroll-button";
-import { PaletteLab } from "@/components/marketing/palette-lab";
 import { SiteFooter, SiteHeader } from "@/components/marketing/site-chrome";
 import { PRODUCT } from "@/lib/constants";
 
@@ -36,7 +35,7 @@ export default function HomePage() {
           className="absolute inset-0 hero-grid-overlay pointer-events-none"
           style={{
             backgroundImage:
-              "linear-gradient(180deg, rgba(11,15,20,0.25), rgba(11,15,20,0.78)), radial-gradient(1000px 520px at 80% 20%, rgba(196,163,90,0.16), transparent 50%), linear-gradient(135deg, #141a22, #0b0f14 55%, #1c2430)",
+              "linear-gradient(180deg, rgba(18,39,53,0.25), rgba(18,39,53,0.78)), radial-gradient(1000px 520px at 80% 20%, rgba(196,163,90,0.16), transparent 50%), linear-gradient(135deg, #1a3344, #122735 55%, #1c3a4d)",
           }}
         />
         <div className="relative">
@@ -69,9 +68,6 @@ export default function HomePage() {
           </section>
         </div>
       </div>
-
-      {/* Light — palette lab */}
-      <PaletteLab />
 
       {/* Light — experience */}
       <section className="container-wide py-20 md:py-28">
@@ -120,7 +116,7 @@ export default function HomePage() {
       {/* Light band with dark CTA card */}
       <section className="container-wide py-20 md:py-28">
         <div className="hover-zoom relative overflow-hidden rounded-[2rem] bg-ink text-ivory">
-          <div className="zoom-target absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(196,163,90,0.22),transparent_45%),linear-gradient(135deg,#1c2430,#0b0f14)]" />
+          <div className="zoom-target absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(196,163,90,0.22),transparent_45%),linear-gradient(135deg,#1c3a4d,#122735)]" />
           <div className="relative grid gap-8 p-8 md:grid-cols-[1.2fr_0.8fr] md:p-14">
             <div>
               <p className="text-xs uppercase tracking-[0.22em] text-brass">Begin</p>

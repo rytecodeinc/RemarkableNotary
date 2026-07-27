@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  --ink: #0b0f14;
-  --ink-2: #141a22;
-  --ink-3: #1c2430;
+  --ink: #122735;
+  --ink-2: #1a3344;
+  --ink-3: #1c3a4d;
   --stone: #8b93a1;
   --mist: #d7dde6;
   --ivory: #f3f1ec;
@@ -11,7 +11,7 @@
   --brass: #c4a35a;
   --brass-2: #a8873f;
   --line: rgba(243, 241, 236, 0.14);
-  --line-dark: rgba(11, 15, 20, 0.12);
+  --line-dark: rgba(18, 39, 53, 0.12);
   --background: var(--paper);
   --foreground: var(--ink);
 }
@@ -181,7 +181,7 @@ a {
 
 .hover-lift:hover {
   transform: translateY(-6px);
-  box-shadow: 0 24px 50px rgba(11, 15, 20, 0.12);
+  box-shadow: 0 24px 50px rgba(18, 39, 53, 0.12);
 }
 
 .hover-zoom {
@@ -215,13 +215,13 @@ a {
 
 .hero-grid-overlay {
   background:
-    linear-gradient(180deg, rgba(11, 15, 20, 0.35), rgba(11, 15, 20, 0.72)),
+    linear-gradient(180deg, rgba(18, 39, 53, 0.35), rgba(18, 39, 53, 0.72)),
     radial-gradient(1200px 600px at 20% 10%, rgba(196, 163, 90, 0.18), transparent 55%);
 }
 
 .nav-blur {
   backdrop-filter: blur(14px);
-  background: rgba(11, 15, 20, 0.55);
+  background: rgba(18, 39, 53, 0.55);
   border-bottom: 1px solid var(--line);
 }
 
