@@ -1,6 +1,34 @@
 import Link from "next/link";
 import { SITE } from "@/lib/constants";
 
+export function SiteBrand({
+  variant = "dark",
+}: {
+  variant?: "dark" | "light";
+}) {
+  const dark = variant === "dark";
+
+  return (
+    <Link href="/" className="group flex items-center gap-3">
+      <span
+        className={`grid h-10 w-10 place-items-center rounded-full border text-xs tracking-[0.18em] transition-colors ${
+          dark
+            ? "border-[var(--line)] group-hover:border-brass"
+            : "border-[var(--line-dark)] group-hover:border-brass"
+        }`}
+      >
+        RN
+      </span>
+      <span>
+        <span className="block font-display text-xl leading-none tracking-wide">{SITE.name}</span>
+        <span className={`block text-[11px] uppercase tracking-[0.18em] ${dark ? "text-mist/70" : "text-stone"}`}>
+          California Notary Course
+        </span>
+      </span>
+    </Link>
+  );
+}
+
 export function SiteHeader({
   variant = "dark",
 }: {
@@ -17,23 +45,7 @@ export function SiteHeader({
       }
     >
       <div className="container-wide flex items-center justify-between gap-4 py-4">
-        <Link href="/" className="group flex items-center gap-3">
-          <span
-            className={`grid h-10 w-10 place-items-center rounded-full border text-xs tracking-[0.18em] transition-colors ${
-              dark
-                ? "border-[var(--line)] group-hover:border-brass"
-                : "border-[var(--line-dark)] group-hover:border-brass"
-            }`}
-          >
-            RN
-          </span>
-          <span>
-            <span className="block font-display text-xl leading-none tracking-wide">{SITE.name}</span>
-            <span className={`block text-[11px] uppercase tracking-[0.18em] ${dark ? "text-mist/70" : "text-stone"}`}>
-              California Notary Course
-            </span>
-          </span>
-        </Link>
+        <SiteBrand variant={variant} />
 
         <div className="flex items-center gap-4 sm:gap-7">
           <nav className="hidden items-center gap-6 text-sm md:flex">

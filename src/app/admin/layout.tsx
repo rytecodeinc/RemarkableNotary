@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { signOut } from "@/app/actions";
-import { SiteFooter } from "@/components/marketing/site-chrome";
+import { SiteBrand, SiteFooter } from "@/components/marketing/site-chrome";
 import { PreviewBanner } from "@/components/ui/preview-banner";
 import { getCurrentProfile } from "@/lib/access";
-import { SITE } from "@/lib/constants";
 import { PREVIEW_ADMIN } from "@/lib/preview";
 import { redirect } from "next/navigation";
 
@@ -21,10 +20,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       {preview ? <PreviewBanner role="admin" /> : null}
       <header className="border-b border-[var(--line-dark)] bg-white">
         <div className="container-wide flex flex-wrap items-center justify-between gap-3 py-4">
-          <div className="flex items-center gap-6">
-            <Link href="/admin" className="font-display text-2xl">
-              {SITE.name} Admin
-            </Link>
+          <div className="flex flex-wrap items-center gap-6">
+            <SiteBrand variant="light" />
             <nav className="flex flex-wrap gap-4 text-sm text-stone">
               <Link href="/admin" className="hover:text-ink">
                 Overview

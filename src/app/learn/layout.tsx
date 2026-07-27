@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { signOut } from "@/app/actions";
-import { SiteFooter } from "@/components/marketing/site-chrome";
+import { SiteBrand, SiteFooter } from "@/components/marketing/site-chrome";
 import { PreviewBanner } from "@/components/ui/preview-banner";
 import { getActiveEntitlement, getCurrentProfile } from "@/lib/access";
-import { SITE } from "@/lib/constants";
 import { PREVIEW_ENTITLEMENT, PREVIEW_STUDENT } from "@/lib/preview";
 
 export default async function LearnLayout({ children }: { children: React.ReactNode }) {
@@ -22,10 +21,8 @@ export default async function LearnLayout({ children }: { children: React.ReactN
       {preview ? <PreviewBanner role="student" /> : null}
       <header className="border-b border-[var(--line-dark)] bg-white/90 backdrop-blur">
         <div className="container-wide flex flex-wrap items-center justify-between gap-3 py-4">
-          <div className="flex items-center gap-6">
-            <Link href="/learn" className="font-display text-2xl tracking-wide">
-              {SITE.name}
-            </Link>
+          <div className="flex flex-wrap items-center gap-6">
+            <SiteBrand variant="light" />
             <nav className="hidden gap-4 text-sm text-stone md:flex">
               <Link href="/learn" className="hover:text-ink">
                 My courses
