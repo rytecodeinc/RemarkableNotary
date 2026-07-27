@@ -35,28 +35,27 @@ export default function HomePage() {
           <SiteHeader variant="light" />
           <section className="container-wide grid items-start gap-10 pb-14 pt-8 md:grid-cols-[1.2fr_0.8fr] md:gap-12 md:pb-20 md:pt-10 lg:min-h-[calc(100svh-5rem)] lg:content-center">
             <div className="reveal max-w-3xl">
-              <p className="text-xs uppercase tracking-[0.28em] text-brass-2">Remarkable Notary</p>
-              <h1 className="mt-5 font-display text-5xl leading-[1.02] tracking-tight md:text-7xl">
-                Precision is the profession.
-                <span className="mt-2 block text-ink-2">Remarkable Notary trains you for it.</span>
+              <p className="text-xs uppercase tracking-[0.28em] text-gold">Remarkable Notary</p>
+              <h1 className="mt-5 font-display text-5xl leading-[1.02] tracking-tight text-ink md:text-7xl">
+                Become a Remarkable Notary in Minutes.
               </h1>
               <div className="mt-8 flex flex-wrap items-center gap-3">
                 <Link href="/pricing" className="btn btn-primary">
-                  View enrollment
+                  Enroll now
                 </Link>
-                <Link href="#curriculum" className="btn btn-ghost">
+                <Link href="#curriculum" className="btn btn-secondary">
                   Explore curriculum
                 </Link>
               </div>
             </div>
 
             <aside className="reveal hover-lift w-full rounded-[1.5rem] border border-[var(--line-dark)] bg-white p-6 md:justify-self-end md:self-start md:max-w-md">
-              <p className="text-xs uppercase tracking-[0.2em] text-brass-2">Enrollment</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-gold">Enrollment</p>
               <p className="mt-3 font-display text-4xl">{PRODUCT.name}</p>
               <p className="mt-2 text-sm text-stone">One-time purchase · 2-year access · All courses</p>
               <p className="mt-6 font-display text-5xl text-ink">${(PRODUCT.priceCents / 100).toFixed(0)}</p>
               <div className="mt-6">
-                <EnrollButton className="btn btn-primary w-full" />
+                <EnrollButton className="btn btn-primary w-full" label="Enroll now" />
               </div>
             </aside>
           </section>
@@ -65,7 +64,7 @@ export default function HomePage() {
 
       <section className="container-wide py-20 md:py-28">
         <div className="max-w-2xl">
-          <p className="text-xs uppercase tracking-[0.22em] text-brass-2">The experience</p>
+          <p className="text-xs uppercase tracking-[0.22em] text-gold">The experience</p>
           <h2 className="mt-3 font-display text-4xl md:text-5xl">Clear instruction. Academic rigor.</h2>
         </div>
         <div className="mt-12 grid gap-5 md:grid-cols-3">
@@ -74,7 +73,7 @@ export default function HomePage() {
               key={item.title}
               className="hover-lift group rounded-[1.35rem] border border-[var(--line-dark)] bg-white p-7"
             >
-              <div className="h-px w-10 bg-brass transition-all duration-500 group-hover:w-16" />
+              <div className="h-px w-10 bg-gold transition-all duration-500 group-hover:w-16" />
               <h3 className="mt-6 font-display text-3xl">{item.title}</h3>
               <p className="mt-3 text-sm leading-relaxed text-stone">{item.copy}</p>
             </article>
@@ -85,7 +84,7 @@ export default function HomePage() {
       <section id="curriculum" className="border-y border-[var(--line-dark)] bg-white">
         <div className="container-wide grid gap-10 py-20 md:grid-cols-[0.9fr_1.1fr] md:py-28">
           <div>
-            <p className="text-xs uppercase tracking-[0.22em] text-brass-2">Curriculum</p>
+            <p className="text-xs uppercase tracking-[0.22em] text-gold">Curriculum</p>
             <h2 className="mt-3 font-display text-4xl md:text-5xl">From enrollment to exam readiness.</h2>
             <p className="mt-5 max-w-md text-stone">
               Ten courses at launch, organized into modules and lessons with video instruction and downloadable resources.
@@ -95,10 +94,10 @@ export default function HomePage() {
             {curriculum.map((item, index) => (
               <li
                 key={item}
-                className="hover-lift flex items-center justify-between gap-4 rounded-2xl border border-[var(--line-dark)] bg-paper px-5 py-4 transition hover:border-brass/60"
+                className="hover-lift flex items-center justify-between gap-4 rounded-2xl border border-[var(--line-dark)] bg-paper px-5 py-4 transition hover:border-teal"
               >
                 <span className="font-display text-2xl md:text-3xl">{item}</span>
-                <span className="text-xs tracking-[0.18em] text-mist">{String(index + 1).padStart(2, "0")}</span>
+                <span className="text-xs tracking-[0.18em] text-teal">{String(index + 1).padStart(2, "0")}</span>
               </li>
             ))}
           </ul>
@@ -107,10 +106,10 @@ export default function HomePage() {
 
       <section className="container-wide py-20 md:py-28">
         <div className="hover-zoom relative overflow-hidden rounded-[2rem] border border-[var(--line-dark)] bg-white">
-          <div className="zoom-target absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(196,163,90,0.16),transparent_45%),linear-gradient(135deg,#f7f8fb,#eef1f6)]" />
+          <div className="zoom-target absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(196,163,90,0.18),transparent_42%),radial-gradient(circle_at_90%_80%,rgba(88,139,139,0.14),transparent_45%),linear-gradient(135deg,#e7f0f4,#dbe9ee)]" />
           <div className="relative grid gap-8 p-8 md:grid-cols-[1.2fr_0.8fr] md:p-14">
             <div>
-              <p className="text-xs uppercase tracking-[0.22em] text-brass-2">Begin</p>
+              <p className="text-xs uppercase tracking-[0.22em] text-gold">Begin</p>
               <h2 className="mt-3 font-display text-4xl md:text-6xl">One enrollment. Two years of access.</h2>
               <p className="mt-5 max-w-xl text-stone">
                 Secure checkout with Stripe. Access unlocks immediately after payment.
@@ -118,7 +117,7 @@ export default function HomePage() {
             </div>
             <div className="flex flex-col justify-end gap-4">
               <Link href="/pricing" className="btn btn-primary text-center">
-                View enrollment
+                Enroll now
               </Link>
               <Link href="/login" className="btn btn-ghost text-center">
                 Already enrolled? Log in

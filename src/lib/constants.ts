@@ -11,5 +11,5 @@ export const ADMIN_EMAIL = "rina@rytecode.com";
 export const SITE = {
   name: "Remarkable Notary",
   domain: "remarkablenotary.com",
-  tagline: "Precision is the profession. Remarkable Notary trains you for it.",
+  tagline: "Become a Remarkable Notary in Minutes.",
 } as const;

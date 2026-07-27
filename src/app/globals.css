@@ -1,19 +1,31 @@
 @import "tailwindcss";
 
 :root {
-  /* Academic light system — gold accent preserved */
-  --ink: #1b2430;
-  --ink-2: #2a3545;
-  --ink-3: #3d4a5c;
-  --stone: #667485;
-  --mist: #8b97a8;
+  /*
+    Palette roles
+    #000022  ink     — headings, body, primary dark UI
+    #dbe9ee  paper   — page background, soft panels
+    #c4a35a  gold    — brand accent only (eyebrows, rules, hover marks)
+    #588b8b  teal    — secondary actions, links, supporting UI
+    #931f1d  crimson — primary enroll CTAs (commitment / action)
+  */
+  --ink: #000022;
+  --ink-2: #1a1a3a;
+  --ink-3: #2e2e4d;
+  --stone: #4a5568;
+  --mist: #6b7c8a;
   --ivory: #ffffff;
-  --paper: #f3f5f8;
+  --paper: #dbe9ee;
   --surface: #ffffff;
+  --gold: #c4a35a;
   --brass: #c4a35a;
   --brass-2: #a8873f;
-  --line: rgba(27, 36, 48, 0.1);
-  --line-dark: rgba(27, 36, 48, 0.12);
+  --teal: #588b8b;
+  --teal-2: #467274;
+  --crimson: #931f1d;
+  --crimson-2: #7a1917;
+  --line: rgba(0, 0, 34, 0.1);
+  --line-dark: rgba(0, 0, 34, 0.12);
   --background: var(--paper);
   --foreground: var(--ink);
 }
@@ -29,8 +41,13 @@
   --color-ivory: var(--ivory);
   --color-paper: var(--paper);
   --color-surface: var(--surface);
+  --color-gold: var(--gold);
   --color-brass: var(--brass);
   --color-brass-2: var(--brass-2);
+  --color-teal: var(--teal);
+  --color-teal-2: var(--teal-2);
+  --color-crimson: var(--crimson);
+  --color-crimson-2: var(--crimson-2);
   --font-sans: var(--font-body);
   --font-display: var(--font-display);
 }
@@ -56,7 +73,7 @@ a {
 }
 
 ::selection {
-  background: rgba(196, 163, 90, 0.3);
+  background: rgba(196, 163, 90, 0.35);
 }
 
 .font-display {
@@ -97,30 +114,44 @@ a {
   transform: translateY(-1px);
 }
 
+/* Primary enroll / purchase — crimson */
 .btn-primary {
-  background: var(--brass);
-  color: var(--ink);
+  background: var(--crimson);
+  color: white;
 }
 
 .btn-primary:hover {
-  background: var(--brass-2);
+  background: var(--crimson-2);
+  color: white;
+}
+
+/* Secondary — teal */
+.btn-secondary {
+  background: var(--teal);
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: var(--teal-2);
   color: white;
 }
 
 .btn-ghost {
-  border-color: var(--line-dark);
+  border-color: rgba(0, 0, 34, 0.18);
   color: var(--ink);
   background: transparent;
 }
 
 .btn-ghost:hover {
-  background: rgba(27, 36, 48, 0.05);
-  border-color: var(--ink);
+  border-color: var(--teal);
+  color: var(--teal-2);
+  background: rgba(88, 139, 139, 0.08);
 }
 
+/* Dark / default solid — navy */
 .btn-dark {
   background: var(--ink);
-  color: var(--ivory);
+  color: white;
 }
 
 .btn-dark:hover {
@@ -128,15 +159,25 @@ a {
 }
 
 .btn-outline {
-  border-color: var(--line-dark);
+  border-color: rgba(0, 0, 34, 0.18);
   color: var(--ink);
   background: transparent;
 }
 
 .btn-outline:hover {
   background: var(--ink);
-  color: var(--ivory);
+  color: white;
   border-color: var(--ink);
+}
+
+.btn-gold {
+  background: var(--gold);
+  color: var(--ink);
+}
+
+.btn-gold:hover {
+  background: var(--brass-2);
+  color: white;
 }
 
 .field {
@@ -168,8 +209,8 @@ a {
 .field input:focus,
 .field textarea:focus,
 .field select:focus {
-  border-color: var(--brass);
-  box-shadow: 0 0 0 3px rgba(196, 163, 90, 0.2);
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(88, 139, 139, 0.2);
 }
 
 .card-panel {
@@ -185,7 +226,7 @@ a {
 
 .hover-lift:hover {
   transform: translateY(-6px);
-  box-shadow: 0 20px 44px rgba(27, 36, 48, 0.08);
+  box-shadow: 0 20px 44px rgba(0, 0, 34, 0.08);
 }
 
 .hover-zoom {
@@ -219,20 +260,20 @@ a {
 
 .hero-grid-overlay {
   background:
-    radial-gradient(900px 480px at 12% 0%, rgba(196, 163, 90, 0.14), transparent 55%),
-    radial-gradient(800px 420px at 90% 10%, rgba(27, 36, 48, 0.05), transparent 50%),
-    linear-gradient(180deg, #f7f8fb 0%, #eef1f6 100%);
+    radial-gradient(900px 480px at 10% 0%, rgba(196, 163, 90, 0.18), transparent 55%),
+    radial-gradient(700px 420px at 92% 8%, rgba(88, 139, 139, 0.16), transparent 50%),
+    linear-gradient(180deg, #e7f0f4 0%, #dbe9ee 55%, #d2e3e9 100%);
 }
 
 .nav-blur {
   backdrop-filter: blur(14px);
-  background: rgba(243, 245, 248, 0.86);
+  background: rgba(219, 233, 238, 0.88);
   border-bottom: 1px solid var(--line-dark);
 }
 
 .prose-rn {
   line-height: 1.7;
-  color: #2a3340;
+  color: #1a1a3a;
 }
 
 .prose-rn p + p {
