@@ -39,7 +39,7 @@ export default function HomePage() {
         />
         <div className="relative">
           <SiteHeader variant="dark" />
-          <section className="container-wide grid min-h-[calc(100svh-5rem)] items-end gap-10 pb-16 pt-16 md:grid-cols-[1.2fr_0.8fr] md:pb-20">
+          <section className="container-wide grid items-start gap-10 pb-14 pt-8 md:grid-cols-[1.2fr_0.8fr] md:gap-12 md:pb-20 md:pt-10 lg:min-h-[calc(100svh-5rem)] lg:content-center">
             <div className="reveal max-w-3xl">
               <p className="text-xs uppercase tracking-[0.28em] text-brass">Remarkable Notary</p>
               <h1 className="mt-5 font-display text-5xl leading-[0.95] tracking-tight md:text-7xl">
@@ -58,7 +58,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <aside className="reveal hover-lift rounded-[1.5rem] border border-[var(--line)] bg-[rgba(20,26,34,0.72)] p-6 backdrop-blur md:justify-self-end md:self-center">
+            <aside className="reveal hover-lift w-full rounded-[1.5rem] border border-[var(--line)] bg-[rgba(20,26,34,0.72)] p-6 backdrop-blur md:justify-self-end md:self-start md:max-w-md">
               <p className="text-xs uppercase tracking-[0.2em] text-brass">Enrollment</p>
               <p className="mt-3 font-display text-4xl">{PRODUCT.name}</p>
               <p className="mt-2 text-sm text-mist/75">One-time purchase · 2-year access · All courses</p>
@@ -125,7 +125,9 @@ export default function HomePage() {
               </p>
             </div>
             <div className="flex flex-col justify-end gap-4">
-              <EnrollButton className="btn btn-primary" />
+              <Link href="/pricing" className="btn btn-primary text-center">
+                View enrollment
+              </Link>
               <Link href="/login" className="btn btn-ghost text-center">
                 Already enrolled? Log in
               </Link>

@@ -23,24 +23,23 @@ export function SiteHeader({
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-7 text-sm md:flex">
-          <Link href="/#curriculum" className="opacity-80 transition hover:opacity-100">
-            Curriculum
-          </Link>
-          <Link href="/pricing" className="opacity-80 transition hover:opacity-100">
-            Pricing
-          </Link>
-          <Link href="/login" className="opacity-80 transition hover:opacity-100">
-            Log in
-          </Link>
+        <div className="flex items-center gap-4 sm:gap-7">
+          <nav className="hidden items-center gap-7 text-sm md:flex">
+            <Link href="/#curriculum" className="opacity-80 transition hover:opacity-100">
+              Curriculum
+            </Link>
+            <Link href="/pricing" className="opacity-80 transition hover:opacity-100">
+              Pricing
+            </Link>
+            <Link href="/login" className="opacity-80 transition hover:opacity-100">
+              Log in
+            </Link>
+          </nav>
+
           <Link href="/pricing" className={dark ? "btn btn-primary" : "btn btn-dark"}>
             Enroll
           </Link>
-        </nav>
-
-        <Link href="/pricing" className={`md:hidden ${dark ? "btn btn-primary" : "btn btn-dark"}`}>
-          Enroll
-        </Link>
+        </div>
       </div>
     </header>
   );
