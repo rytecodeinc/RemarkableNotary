@@ -12,8 +12,8 @@ export function SiteHeader({
     <header
       className={
         dark
-          ? "sticky top-0 z-40 border-b border-white/10 bg-[rgba(0,0,34,0.92)] text-ivory backdrop-blur-md"
-          : "nav-blur sticky top-0 z-40 text-ink"
+          ? "nav-blur sticky top-0 z-40 text-ivory"
+          : "nav-blur-light sticky top-0 z-40 text-ink"
       }
     >
       <div className="container-wide flex items-center justify-between gap-4 py-4">
@@ -21,7 +21,7 @@ export function SiteHeader({
           <span
             className={`grid h-10 w-10 place-items-center rounded-full border text-xs tracking-[0.18em] transition-colors ${
               dark
-                ? "border-white/20 group-hover:border-brass"
+                ? "border-[var(--line)] group-hover:border-brass"
                 : "border-[var(--line-dark)] group-hover:border-brass"
             }`}
           >
@@ -29,7 +29,7 @@ export function SiteHeader({
           </span>
           <span>
             <span className="block font-display text-xl leading-none tracking-wide">{SITE.name}</span>
-            <span className={`block text-[11px] uppercase tracking-[0.18em] ${dark ? "text-white/60" : "text-stone"}`}>
+            <span className={`block text-[11px] uppercase tracking-[0.18em] ${dark ? "text-mist/70" : "text-stone"}`}>
               California Notary Course
             </span>
           </span>
@@ -48,7 +48,7 @@ export function SiteHeader({
             </Link>
           </nav>
 
-          <Link href="/pricing" className="btn btn-dark">
+          <Link href="/pricing" className={dark ? "btn btn-primary" : "btn btn-dark"}>
             Enroll
           </Link>
         </div>

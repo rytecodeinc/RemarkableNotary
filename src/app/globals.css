@@ -129,6 +129,16 @@ a {
   border-color: var(--ink);
 }
 
+.btn-ghost-light {
+  border-color: var(--line);
+  color: var(--ivory);
+  background: transparent;
+}
+
+.btn-ghost-light:hover {
+  background: rgba(243, 241, 236, 0.08);
+}
+
 .btn-dark {
   background: var(--ink);
   color: var(--ivory);
@@ -230,12 +240,18 @@ a {
 
 .hero-grid-overlay {
   background:
-    radial-gradient(1200px 600px at 20% -10%, rgba(14, 74, 168, 0.1), transparent 55%),
-    radial-gradient(1000px 520px at 90% 15%, rgba(196, 163, 90, 0.14), transparent 55%),
-    linear-gradient(180deg, #ffffff 0%, var(--paper) 55%, #f3f1ec 100%);
+    linear-gradient(180deg, rgba(11, 15, 20, 0.25), rgba(11, 15, 20, 0.72)),
+    radial-gradient(1000px 520px at 80% 20%, rgba(196, 163, 90, 0.16), transparent 50%),
+    linear-gradient(135deg, #141a22, #0b0f14 55%, #1c2430);
 }
 
 .nav-blur {
+  backdrop-filter: blur(14px);
+  background: rgba(11, 15, 20, 0.55);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav-blur-light {
   backdrop-filter: blur(14px);
   background: rgba(250, 248, 244, 0.86);
   border-bottom: 1px solid var(--line-dark);
