@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { signOut } from "@/app/actions";
+import { SiteFooter } from "@/components/marketing/site-chrome";
 import { PreviewBanner } from "@/components/ui/preview-banner";
 import { getActiveEntitlement, getCurrentProfile } from "@/lib/access";
 import { SITE } from "@/lib/constants";
@@ -17,7 +18,7 @@ export default async function LearnLayout({ children }: { children: React.ReactN
       : await getActiveEntitlement(viewer.id);
 
   return (
-    <div className="min-h-screen bg-paper text-ink">
+    <div className="flex min-h-screen flex-col bg-paper text-ink">
       {preview ? <PreviewBanner role="student" /> : null}
       <header className="border-b border-[var(--line-dark)] bg-white/90 backdrop-blur">
         <div className="container-wide flex flex-wrap items-center justify-between gap-3 py-4">
@@ -62,7 +63,8 @@ export default async function LearnLayout({ children }: { children: React.ReactN
           </div>
         ) : null}
       </header>
-      <main className="container-wide py-8 md:py-10">{children}</main>
+      <main className="container-wide flex-1 py-8 md:py-10">{children}</main>
+      <SiteFooter />
     </div>
   );
 }

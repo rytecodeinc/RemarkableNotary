@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { signOut } from "@/app/actions";
+import { SiteFooter } from "@/components/marketing/site-chrome";
 import { PreviewBanner } from "@/components/ui/preview-banner";
 import { getCurrentProfile } from "@/lib/access";
 import { SITE } from "@/lib/constants";
@@ -16,7 +17,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   }
 
   return (
-    <div className="min-h-screen bg-paper text-ink">
+    <div className="flex min-h-screen flex-col bg-paper text-ink">
       {preview ? <PreviewBanner role="admin" /> : null}
       <header className="border-b border-[var(--line-dark)] bg-white">
         <div className="container-wide flex flex-wrap items-center justify-between gap-3 py-4">
@@ -58,7 +59,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           </div>
         </div>
       </header>
-      <main className="container-wide py-8 md:py-10">{children}</main>
+      <main className="container-wide flex-1 py-8 md:py-10">{children}</main>
+      <SiteFooter />
     </div>
   );
 }
