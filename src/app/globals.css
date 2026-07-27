@@ -260,9 +260,14 @@ a {
 
 .hero-grid-overlay {
   background:
-    radial-gradient(900px 480px at 10% 0%, rgba(196, 163, 90, 0.18), transparent 55%),
-    radial-gradient(700px 420px at 92% 8%, rgba(88, 139, 139, 0.16), transparent 50%),
-    linear-gradient(180deg, #e7f0f4 0%, #dbe9ee 55%, #d2e3e9 100%);
+    radial-gradient(900px 480px at 10% 0%, color-mix(in srgb, var(--gold) 22%, transparent), transparent 55%),
+    radial-gradient(700px 420px at 92% 8%, color-mix(in srgb, var(--teal) 18%, transparent), transparent 50%),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--paper) 70%, white) 0%,
+      var(--paper) 55%,
+      color-mix(in srgb, var(--paper) 88%, var(--ink)) 100%
+    );
 }
 
 .nav-blur {
