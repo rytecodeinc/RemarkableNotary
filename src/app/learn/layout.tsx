@@ -1,17 +1,24 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { signOut } from "@/app/actions";
+import { PreviewBanner } from "@/components/ui/preview-banner";
 import { getActiveEntitlement, getCurrentProfile } from "@/lib/access";
 import { SITE } from "@/lib/constants";
+import { PREVIEW_ENTITLEMENT, PREVIEW_STUDENT } from "@/lib/preview";
 
 export default async function LearnLayout({ children }: { children: React.ReactNode }) {
   const profile = await getCurrentProfile();
-  if (!profile) redirect("/login?next=/learn");
+  const preview = !profile;
+  const viewer = profile ?? PREVIEW_STUDENT;
 
-  const entitlement = profile.role === "admin" ? null : await getActiveEntitlement(profile.id);
+  const entitlement = preview
+    ? PREVIEW_ENTITLEMENT
+    : viewer.role === "admin"
+      ? null
+      : await getActiveEntitlement(viewer.id);
 
   return (
     <div className="min-h-screen bg-paper text-ink">
+      {preview ? <PreviewBanner role="student" /> : null}
       <header className="border-b border-[var(--line-dark)] bg-white/90 backdrop-blur">
         <div className="container-wide flex flex-wrap items-center justify-between gap-3 py-4">
           <div className="flex items-center gap-6">
@@ -19,20 +26,33 @@ export default async function LearnLayout({ children }: { children: React.ReactN
               {SITE.name}
             </Link>
             <nav className="hidden gap-4 text-sm text-stone md:flex">
-              <Link href="/learn" className="hover:text-ink">My courses</Link>
-              <Link href="/account" className="hover:text-ink">Account</Link>
+              <Link href="/learn" className="hover:text-ink">
+                My courses
+              </Link>
+              <Link href={preview ? "/learn" : "/account"} className="hover:text-ink">
+                Account
+              </Link>
+              <Link href="/" className="hover:text-ink">
+                Home
+              </Link>
             </nav>
           </div>
           <div className="flex items-center gap-3 text-sm">
-            <span className="hidden text-stone sm:inline">{profile.email}</span>
-            <form action={signOut}>
-              <button type="submit" className="btn btn-outline py-2">
-                Sign out
-              </button>
-            </form>
+            <span className="hidden text-stone sm:inline">{viewer.email}</span>
+            {preview ? (
+              <Link href="/login" className="btn btn-outline py-2">
+                Log in
+              </Link>
+            ) : (
+              <form action={signOut}>
+                <button type="submit" className="btn btn-outline py-2">
+                  Sign out
+                </button>
+              </form>
+            )}
           </div>
         </div>
-        {profile.role !== "admin" && !entitlement ? (
+        {!preview && viewer.role !== "admin" && !entitlement ? (
           <div className="border-t border-amber-200 bg-amber-50 px-4 py-3 text-center text-sm text-amber-950">
             Your membership is inactive.{" "}
             <Link href="/pricing" className="font-semibold underline">

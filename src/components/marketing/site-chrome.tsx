@@ -36,12 +36,18 @@ export function SiteHeader({
         </Link>
 
         <div className="flex items-center gap-4 sm:gap-7">
-          <nav className="hidden items-center gap-7 text-sm md:flex">
+          <nav className="hidden items-center gap-6 text-sm md:flex">
             <Link href="/#curriculum" className="opacity-80 transition hover:opacity-100">
               Curriculum
             </Link>
             <Link href="/pricing" className="opacity-80 transition hover:opacity-100">
               Pricing
+            </Link>
+            <Link href="/admin" className="opacity-80 transition hover:opacity-100">
+              Admin
+            </Link>
+            <Link href="/learn" className="opacity-80 transition hover:opacity-100">
+              Student
             </Link>
             <Link href="/login" className="opacity-80 transition hover:opacity-100">
               Log in
@@ -71,8 +77,9 @@ export function SiteFooter() {
           <p className="text-xs uppercase tracking-[0.18em] text-brass">Explore</p>
           <div className="mt-4 grid gap-2 text-sm text-mist/85">
             <Link href="/pricing" className="hover:text-ivory">Pricing</Link>
-            <Link href="/login" className="hover:text-ivory">Student login</Link>
-            <Link href="/#curriculum" className="hover:text-ivory">Curriculum</Link>
+            <Link href="/admin" className="hover:text-ivory">Admin dashboard</Link>
+            <Link href="/learn" className="hover:text-ivory">Student dashboard</Link>
+            <Link href="/login" className="hover:text-ivory">Log in</Link>
           </div>
         </div>
         <div>

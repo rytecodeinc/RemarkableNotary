@@ -2,69 +2,81 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getActiveEntitlement, getCurrentProfile } from "@/lib/access";
 import { homePathForRole } from "@/lib/constants";
+import { PREVIEW_COURSES, PREVIEW_ENTITLEMENT, isSupabaseConfigured } from "@/lib/preview";
 import { createClient } from "@/lib/supabase/server";
 import { formatDate } from "@/lib/utils";
 import type { Course, LessonProgress } from "@/lib/types";
 
 export default async function LearnHomePage() {
   const profile = await getCurrentProfile();
-  if (!profile) redirect("/login?next=/learn");
+  const preview = !profile || !isSupabaseConfigured();
 
-  // Admins belong in the admin dashboard; keep /learn for students.
-  if (profile.role === "admin") {
+  if (profile?.role === "admin") {
     redirect(homePathForRole("admin"));
   }
 
-  const entitlement = await getActiveEntitlement(profile.id);
-  const supabase = await createClient();
+  const entitlement = preview
+    ? PREVIEW_ENTITLEMENT
+    : profile
+      ? await getActiveEntitlement(profile.id)
+      : null;
 
-  const { data: courses } = await supabase
-    .from("courses")
-    .select("*")
-    .eq("is_published", true)
-    .order("sort_order", { ascending: true });
+  let courseList: Course[] = PREVIEW_COURSES;
+  let completedCount = 2;
+  let resumeHref: string | null = `/learn/courses/${PREVIEW_COURSES[0].id}`;
 
-  const courseList = (courses as Course[] | null) ?? [];
+  if (!preview && profile) {
+    const supabase = await createClient();
+    const { data: courses } = await supabase
+      .from("courses")
+      .select("*")
+      .eq("is_published", true)
+      .order("sort_order", { ascending: true });
 
-  const { data: progressRows } = await supabase
-    .from("lesson_progress")
-    .select("*")
-    .eq("user_id", profile.id);
+    courseList = (courses as Course[] | null) ?? [];
 
-  const progress = (progressRows as LessonProgress[] | null) ?? [];
-  const completedCount = progress.filter((p) => p.completed).length;
+    const { data: progressRows } = await supabase
+      .from("lesson_progress")
+      .select("*")
+      .eq("user_id", profile.id);
 
-  const resume = progress
-    .slice()
-    .sort((a, b) => +new Date(b.updated_at) - +new Date(a.updated_at))[0];
+    const progress = (progressRows as LessonProgress[] | null) ?? [];
+    completedCount = progress.filter((p) => p.completed).length;
 
-  let resumeHref: string | null = null;
-  if (resume && entitlement) {
-    const { data: lesson } = await supabase
-      .from("lessons")
-      .select("id, module_id")
-      .eq("id", resume.lesson_id)
-      .maybeSingle();
+    const resume = progress
+      .slice()
+      .sort((a, b) => +new Date(b.updated_at) - +new Date(a.updated_at))[0];
 
-    if (lesson?.module_id) {
-      const { data: mod } = await supabase
-        .from("modules")
-        .select("course_id")
-        .eq("id", lesson.module_id)
+    resumeHref = null;
+    if (resume && entitlement) {
+      const { data: lesson } = await supabase
+        .from("lessons")
+        .select("id, module_id")
+        .eq("id", resume.lesson_id)
         .maybeSingle();
 
-      if (mod?.course_id) {
-        resumeHref = `/learn/courses/${mod.course_id}/lessons/${resume.lesson_id}`;
+      if (lesson?.module_id) {
+        const { data: mod } = await supabase
+          .from("modules")
+          .select("course_id")
+          .eq("id", lesson.module_id)
+          .maybeSingle();
+
+        if (mod?.course_id) {
+          resumeHref = `/learn/courses/${mod.course_id}/lessons/${resume.lesson_id}`;
+        }
       }
     }
   }
+
+  const displayName = preview ? "Alex" : profile?.full_name;
 
   return (
     <div className="grid gap-8">
       <section className="rounded-[1.5rem] bg-ink px-6 py-8 text-ivory md:px-8">
         <p className="text-xs uppercase tracking-[0.2em] text-brass">Student dashboard</p>
         <h1 className="mt-2 font-display text-4xl md:text-5xl">
-          Welcome{profile.full_name ? `, ${profile.full_name}` : ""}
+          Welcome{displayName ? `, ${displayName}` : ""}
         </h1>
         <p className="mt-3 max-w-2xl text-mist/80">
           {entitlement
@@ -77,8 +89,8 @@ export default async function LearnHomePage() {
           </p>
         ) : null}
         <div className="mt-6 flex flex-wrap gap-3">
-          {resumeHref ? (
-            <Link href={resumeHref} className="btn btn-primary">
+          {resumeHref && entitlement ? (
+            <Link href={preview ? "/learn" : resumeHref} className="btn btn-primary">
               Resume last lesson
             </Link>
           ) : null}
@@ -87,7 +99,10 @@ export default async function LearnHomePage() {
               Get access
             </Link>
           ) : courseList[0] ? (
-            <Link href={`/learn/courses/${courseList[0].id}`} className="btn btn-ghost">
+            <Link
+              href={preview ? "/learn" : `/learn/courses/${courseList[0].id}`}
+              className="btn btn-ghost"
+            >
               Browse courses
             </Link>
           ) : null}
@@ -111,15 +126,13 @@ export default async function LearnHomePage() {
             </Link>
           </div>
         ) : courseList.length === 0 ? (
-          <div className="card-panel text-sm text-stone">
-            No published courses yet. Check back soon.
-          </div>
+          <div className="card-panel text-sm text-stone">No published courses yet. Check back soon.</div>
         ) : (
           <div className="grid gap-4 md:grid-cols-2">
             {courseList.map((course) => (
               <Link
                 key={course.id}
-                href={`/learn/courses/${course.id}`}
+                href={preview ? "/learn" : `/learn/courses/${course.id}`}
                 className="hover-lift card-panel block"
               >
                 <p className="text-xs uppercase tracking-[0.16em] text-stone">Course</p>

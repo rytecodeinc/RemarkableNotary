@@ -1,5 +1,6 @@
 import { addYears, isAfter, isBefore } from "date-fns";
 import { ADMIN_EMAIL, PRODUCT, homePathForRole, isAdminEmail } from "@/lib/constants";
+import { isSupabaseConfigured } from "@/lib/preview";
 import type { Entitlement, Profile, UserRole } from "@/lib/types";
 import { createClient, createServiceClient } from "@/lib/supabase/server";
 
@@ -38,7 +39,6 @@ export async function ensureProfile(user: {
     (typeof user.user_metadata?.name === "string" && user.user_metadata.name) ||
     "";
 
-  // Prefer service role so profile bootstrap works even before RLS policies settle.
   try {
     const service = createServiceClient();
     const { data, error } = await service
@@ -56,7 +56,6 @@ export async function ensureProfile(user: {
       .single();
 
     if (!error && data) {
-      // Keep sole admin locked to ADMIN_EMAIL; never promote other emails.
       if (role === "admin" && data.role !== "admin") {
         const { data: promoted } = await service
           .from("profiles")
@@ -78,7 +77,7 @@ export async function ensureProfile(user: {
       return data as Profile;
     }
   } catch {
-    // Fall through to user-scoped client when service key is unavailable.
+    // Fall through when service key is unavailable.
   }
 
   const supabase = await createClient();
@@ -109,37 +108,49 @@ export async function ensureProfile(user: {
 }
 
 export async function getCurrentProfile(): Promise<Profile | null> {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) return null;
+  if (!isSupabaseConfigured()) return null;
 
   try {
-    return await ensureProfile({
-      id: user.id,
-      email: user.email,
-      user_metadata: user.user_metadata,
-    });
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) return null;
+
+    try {
+      return await ensureProfile({
+        id: user.id,
+        email: user.email,
+        user_metadata: user.user_metadata,
+      });
+    } catch {
+      const { data } = await supabase.from("profiles").select("*").eq("id", user.id).maybeSingle();
+      return (data as Profile | null) ?? null;
+    }
   } catch {
-    const { data } = await supabase.from("profiles").select("*").eq("id", user.id).maybeSingle();
-    return (data as Profile | null) ?? null;
+    return null;
   }
 }
 
 export async function getActiveEntitlement(userId: string): Promise<Entitlement | null> {
-  const supabase = await createClient();
-  const { data } = await supabase
-    .from("entitlements")
-    .select("*")
-    .eq("user_id", userId)
-    .eq("product_code", PRODUCT.code)
-    .eq("status", "active")
-    .order("access_ends_at", { ascending: false });
+  if (!isSupabaseConfigured()) return null;
 
-  const entitlements = (data as Entitlement[] | null) ?? [];
-  return entitlements.find((e) => isEntitlementActive(e)) ?? null;
+  try {
+    const supabase = await createClient();
+    const { data } = await supabase
+      .from("entitlements")
+      .select("*")
+      .eq("user_id", userId)
+      .eq("product_code", PRODUCT.code)
+      .eq("status", "active")
+      .order("access_ends_at", { ascending: false });
+
+    const entitlements = (data as Entitlement[] | null) ?? [];
+    return entitlements.find((e) => isEntitlementActive(e)) ?? null;
+  } catch {
+    return null;
+  }
 }
 
 export async function requireUser() {
