@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { EnrollButton } from "@/components/marketing/enroll-button";
+import { PaletteLab } from "@/components/marketing/palette-lab";
 import { SiteFooter, SiteHeader } from "@/components/marketing/site-chrome";
 import { PRODUCT } from "@/lib/constants";
 
@@ -61,6 +62,8 @@ export default function HomePage() {
           </section>
         </div>
       </div>
+
+      <PaletteLab />
 
       <section className="container-wide py-20 md:py-28">
         <div className="max-w-2xl">
