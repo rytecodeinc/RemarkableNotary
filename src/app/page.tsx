@@ -30,21 +30,28 @@ const curriculum = [
 export default function HomePage() {
   return (
     <div className="bg-paper text-ink">
+      {/* Dark hero */}
       <div className="relative min-h-[100svh] overflow-hidden bg-ink text-ivory">
-        <div className="absolute inset-0 hero-grid-overlay pointer-events-none" />
+        <div
+          className="absolute inset-0 hero-grid-overlay pointer-events-none"
+          style={{
+            backgroundImage:
+              "linear-gradient(180deg, rgba(11,15,20,0.25), rgba(11,15,20,0.78)), radial-gradient(1000px 520px at 80% 20%, rgba(196,163,90,0.16), transparent 50%), linear-gradient(135deg, #141a22, #0b0f14 55%, #1c2430)",
+          }}
+        />
         <div className="relative">
           <SiteHeader variant="dark" />
           <section className="container-wide grid items-start gap-10 pb-14 pt-8 md:grid-cols-[1.2fr_0.8fr] md:gap-12 md:pb-20 md:pt-10 lg:min-h-[calc(100svh-5rem)] lg:content-center">
             <div className="reveal max-w-3xl">
               <p className="text-xs uppercase tracking-[0.28em] text-brass">Remarkable Notary</p>
-              <h1 className="mt-5 font-display text-5xl leading-[1.02] tracking-tight md:text-7xl">
+              <h1 className="mt-5 font-display text-5xl leading-[0.95] tracking-tight md:text-7xl">
                 Become a Remarkable Notary in Minutes.
               </h1>
               <div className="mt-8 flex flex-wrap items-center gap-3">
                 <Link href="/pricing" className="btn btn-primary">
-                  Enroll now
+                  View enrollment
                 </Link>
-                <Link href="#curriculum" className="btn btn-ghost-light">
+                <Link href="#curriculum" className="btn btn-ghost">
                   Explore curriculum
                 </Link>
               </div>
@@ -53,18 +60,20 @@ export default function HomePage() {
             <aside className="reveal hover-lift w-full rounded-[1.5rem] border border-[var(--line)] bg-[rgba(20,26,34,0.72)] p-6 backdrop-blur md:justify-self-end md:self-start md:max-w-md">
               <p className="text-xs uppercase tracking-[0.2em] text-brass">Enrollment</p>
               <p className="mt-3 font-display text-4xl">{PRODUCT.name}</p>
-              <p className="mt-2 text-sm text-mist/80">One-time purchase · 2-year access · All courses</p>
+              <p className="mt-2 text-sm text-mist/75">One-time purchase · 2-year access · All courses</p>
               <p className="mt-6 font-display text-5xl text-ivory">${(PRODUCT.priceCents / 100).toFixed(0)}</p>
               <div className="mt-6">
-                <EnrollButton className="btn btn-primary w-full" label="Enroll now" />
+                <EnrollButton className="btn btn-primary w-full" />
               </div>
             </aside>
           </section>
         </div>
       </div>
 
+      {/* Light — palette lab */}
       <PaletteLab />
 
+      {/* Light — experience */}
       <section className="container-wide py-20 md:py-28">
         <div className="max-w-2xl">
           <p className="text-xs uppercase tracking-[0.22em] text-brass-2">The experience</p>
@@ -84,11 +93,12 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Dark — curriculum */}
       <section id="curriculum" className="bg-ink text-ivory">
         <div className="container-wide grid gap-10 py-20 md:grid-cols-[0.9fr_1.1fr] md:py-28">
           <div>
             <p className="text-xs uppercase tracking-[0.22em] text-brass">Curriculum</p>
-            <h2 className="mt-3 font-display text-4xl md:text-5xl">From enrollment to exam readiness.</h2>
+            <h2 className="mt-3 font-display text-4xl md:text-5xl">A path from enrollment to exam readiness.</h2>
             <p className="mt-5 max-w-md text-mist/80">
               Ten courses at launch, organized into modules and lessons with video instruction and downloadable resources.
             </p>
@@ -107,22 +117,23 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Light band with dark CTA card */}
       <section className="container-wide py-20 md:py-28">
         <div className="hover-zoom relative overflow-hidden rounded-[2rem] bg-ink text-ivory">
           <div className="zoom-target absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(196,163,90,0.22),transparent_45%),linear-gradient(135deg,#1c2430,#0b0f14)]" />
           <div className="relative grid gap-8 p-8 md:grid-cols-[1.2fr_0.8fr] md:p-14">
             <div>
               <p className="text-xs uppercase tracking-[0.22em] text-brass">Begin</p>
-              <h2 className="mt-3 font-display text-4xl md:text-6xl">One enrollment. Two years of access.</h2>
+              <h2 className="mt-3 font-display text-4xl md:text-6xl">Enroll once. Access everything for two years.</h2>
               <p className="mt-5 max-w-xl text-mist/80">
-                Secure checkout with Stripe. Access unlocks immediately after payment.
+                Secure checkout with Stripe. Access unlocks immediately after payment — then learn on desktop or mobile whenever you are ready.
               </p>
             </div>
             <div className="flex flex-col justify-end gap-4">
               <Link href="/pricing" className="btn btn-primary text-center">
-                Enroll now
+                View enrollment
               </Link>
-              <Link href="/login" className="btn btn-ghost-light text-center">
+              <Link href="/login" className="btn btn-ghost text-center">
                 Already enrolled? Log in
               </Link>
             </div>

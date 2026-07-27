@@ -12,11 +12,11 @@ export default function PricingPage() {
     <div className="bg-paper text-ink">
       <SiteHeader variant="light" />
       <main className="container-rn py-16 md:py-24">
-        <p className="text-xs uppercase tracking-[0.22em] text-brass">Pricing</p>
+        <p className="text-xs uppercase tracking-[0.22em] text-brass-2">Pricing</p>
         <h1 className="mt-3 max-w-3xl font-display text-5xl md:text-6xl">
           One membership. Full curriculum. Two years.
         </h1>
-        <p className="mt-5 max-w-2xl text-stone">
+        <p className="mt-5 max-w-2xl text-[#4a5564]">
           No tiers, no drip-locked upsells. Purchase the {PRODUCT.name} once and unlock every published course for {PRODUCT.accessYears} years.
         </p>
 
@@ -26,14 +26,14 @@ export default function PricingPage() {
             <h2 className="mt-3 font-display text-4xl">{PRODUCT.name}</h2>
             <p className="mt-6 font-display text-6xl">${(PRODUCT.priceCents / 100).toFixed(0)}</p>
             <p className="mt-2 text-sm text-stone">One-time payment · Access for 2 years</p>
-            <ul className="mt-8 grid gap-3 text-sm text-ink-2">
+            <ul className="mt-8 grid gap-3 text-sm text-[#2a3340]">
               <li>All published courses, modules, and lessons</li>
               <li>Video lessons + downloadable resources</li>
               <li>Progress tracking and resume where you left off</li>
               <li>Mobile-friendly student experience</li>
             </ul>
             <div className="mt-8">
-              <EnrollButton className="btn btn-primary w-full" label="Enroll now" />
+              <EnrollButton className="btn btn-dark w-full" />
             </div>
           </article>
 

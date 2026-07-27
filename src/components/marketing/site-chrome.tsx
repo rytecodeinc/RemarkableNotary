@@ -2,7 +2,7 @@ import Link from "next/link";
 import { SITE } from "@/lib/constants";
 
 export function SiteHeader({
-  variant = "light",
+  variant = "dark",
 }: {
   variant?: "dark" | "light";
 }) {
@@ -13,7 +13,7 @@ export function SiteHeader({
       className={
         dark
           ? "nav-blur sticky top-0 z-40 text-ivory"
-          : "nav-blur-light sticky top-0 z-40 text-ink"
+          : "sticky top-0 z-40 border-b border-[var(--line-dark)] bg-[rgba(250,248,244,0.86)] backdrop-blur-md text-ink"
       }
     >
       <div className="container-wide flex items-center justify-between gap-4 py-4">
@@ -59,29 +59,29 @@ export function SiteHeader({
 
 export function SiteFooter() {
   return (
-    <footer className="mt-auto bg-ink text-ivory">
+    <footer className="mt-auto border-t border-[var(--line)] bg-ink text-ivory">
       <div className="container-wide grid gap-8 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
           <p className="font-display text-3xl">{SITE.name}</p>
-          <p className="mt-3 max-w-md text-sm leading-relaxed text-white/70">
+          <p className="mt-3 max-w-md text-sm leading-relaxed text-mist/80">
             Structured online training for aspiring and working California notaries — clear, professional, and built for exam readiness.
           </p>
         </div>
         <div>
           <p className="text-xs uppercase tracking-[0.18em] text-brass">Explore</p>
-          <div className="mt-4 grid gap-2 text-sm text-white/75">
-            <Link href="/pricing" className="hover:text-white">Pricing</Link>
-            <Link href="/login" className="hover:text-white">Student login</Link>
-            <Link href="/#curriculum" className="hover:text-white">Curriculum</Link>
+          <div className="mt-4 grid gap-2 text-sm text-mist/85">
+            <Link href="/pricing" className="hover:text-ivory">Pricing</Link>
+            <Link href="/login" className="hover:text-ivory">Student login</Link>
+            <Link href="/#curriculum" className="hover:text-ivory">Curriculum</Link>
           </div>
         </div>
         <div>
           <p className="text-xs uppercase tracking-[0.18em] text-brass">Contact</p>
-          <p className="mt-4 text-sm text-white/75">{SITE.domain}</p>
+          <p className="mt-4 text-sm text-mist/85">{SITE.domain}</p>
         </div>
       </div>
-      <div className="border-t border-white/10">
-        <div className="container-wide flex flex-wrap items-center justify-between gap-3 py-5 text-xs text-white/50">
+      <div className="border-t border-[var(--line)]">
+        <div className="container-wide flex flex-wrap items-center justify-between gap-3 py-5 text-xs text-mist/60">
           <p>© {new Date().getFullYear()} {SITE.name}</p>
           <p>Educational training — not legal advice.</p>
         </div>

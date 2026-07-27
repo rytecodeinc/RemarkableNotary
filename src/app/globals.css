@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
 :root {
-  /* Original Remarkable Notary palette */
   --ink: #0b0f14;
   --ink-2: #141a22;
   --ink-3: #1c2430;
@@ -9,10 +8,8 @@
   --mist: #d7dde6;
   --ivory: #f3f1ec;
   --paper: #faf8f4;
-  --surface: #ffffff;
   --brass: #c4a35a;
   --brass-2: #a8873f;
-  --gold: var(--brass);
   --line: rgba(243, 241, 236, 0.14);
   --line-dark: rgba(11, 15, 20, 0.12);
   --background: var(--paper);
@@ -29,10 +26,8 @@
   --color-mist: var(--mist);
   --color-ivory: var(--ivory);
   --color-paper: var(--paper);
-  --color-surface: var(--surface);
   --color-brass: var(--brass);
   --color-brass-2: var(--brass-2);
-  --color-gold: var(--gold);
   --font-sans: var(--font-body);
   --font-display: var(--font-display);
 }
@@ -109,33 +104,13 @@ a {
   color: white;
 }
 
-.btn-secondary {
-  background: var(--ink);
-  color: var(--ivory);
-}
-
-.btn-secondary:hover {
-  background: var(--ink-2);
-}
-
 .btn-ghost {
-  border-color: var(--line-dark);
-  color: var(--ink);
-  background: transparent;
-}
-
-.btn-ghost:hover {
-  background: rgba(11, 15, 20, 0.05);
-  border-color: var(--ink);
-}
-
-.btn-ghost-light {
   border-color: var(--line);
   color: var(--ivory);
   background: transparent;
 }
 
-.btn-ghost-light:hover {
+.btn-ghost:hover {
   background: rgba(243, 241, 236, 0.08);
 }
 
@@ -240,21 +215,14 @@ a {
 
 .hero-grid-overlay {
   background:
-    linear-gradient(180deg, rgba(11, 15, 20, 0.25), rgba(11, 15, 20, 0.72)),
-    radial-gradient(1000px 520px at 80% 20%, rgba(196, 163, 90, 0.16), transparent 50%),
-    linear-gradient(135deg, #141a22, #0b0f14 55%, #1c2430);
+    linear-gradient(180deg, rgba(11, 15, 20, 0.35), rgba(11, 15, 20, 0.72)),
+    radial-gradient(1200px 600px at 20% 10%, rgba(196, 163, 90, 0.18), transparent 55%);
 }
 
 .nav-blur {
   backdrop-filter: blur(14px);
   background: rgba(11, 15, 20, 0.55);
   border-bottom: 1px solid var(--line);
-}
-
-.nav-blur-light {
-  backdrop-filter: blur(14px);
-  background: rgba(250, 248, 244, 0.86);
-  border-bottom: 1px solid var(--line-dark);
 }
 
 .prose-rn {

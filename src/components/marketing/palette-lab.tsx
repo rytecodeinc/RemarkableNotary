@@ -150,10 +150,10 @@ export function PaletteLab() {
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
-            <button type="button" className="btn btn-secondary" onClick={randomizeAll}>
+            <button type="button" className="btn btn-dark" onClick={randomizeAll}>
               Randomize all
             </button>
-            <button type="button" className="btn btn-ghost" onClick={resetDefaults}>
+            <button type="button" className="btn btn-outline" onClick={resetDefaults}>
               Reset
             </button>
             <button type="button" className="btn btn-outline" onClick={copyExport}>
