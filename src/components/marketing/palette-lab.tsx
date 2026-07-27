@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 
-type RoleKey = "ink" | "paper" | "gold" | "teal" | "crimson";
+type RoleKey = "haze" | "twine" | "botticelli" | "brick" | "zodiac";
 
 type Role = {
   key: RoleKey;
@@ -13,43 +13,43 @@ type Role = {
 
 const ROLES: Role[] = [
   {
-    key: "ink",
-    label: "Ink",
-    description: "Headings, body text, footer, dark buttons",
-    cssVars: ["--ink", "--foreground"],
+    key: "haze",
+    label: "Black Haze",
+    description: "Light backgrounds and soft page canvas",
+    cssVars: ["--haze", "--paper", "--background"],
   },
   {
-    key: "paper",
-    label: "Paper",
-    description: "Page background and soft panels",
-    cssVars: ["--paper", "--background"],
+    key: "twine",
+    label: "Twine",
+    description: "Light accent — eyebrows, rules, highlights",
+    cssVars: ["--twine", "--gold", "--brass"],
   },
   {
-    key: "gold",
-    label: "Gold",
-    description: "Eyebrows, accent lines, brand highlights",
-    cssVars: ["--gold", "--brass"],
+    key: "botticelli",
+    label: "Botticelli",
+    description: "Main brand — secondary panels and soft fills",
+    cssVars: ["--botticelli", "--brand"],
   },
   {
-    key: "teal",
-    label: "Teal",
-    description: "Secondary buttons, link hovers, numbers",
-    cssVars: ["--teal"],
+    key: "brick",
+    label: "Old Brick",
+    description: "Dark accent — enroll CTAs and callouts",
+    cssVars: ["--brick", "--crimson"],
   },
   {
-    key: "crimson",
-    label: "Crimson",
-    description: "Primary enroll / purchase CTAs",
-    cssVars: ["--crimson"],
+    key: "zodiac",
+    label: "Blue Zodiac",
+    description: "Dark shades — text, footer, inverted sections",
+    cssVars: ["--zodiac", "--ink", "--foreground"],
   },
 ];
 
 const DEFAULTS: Record<RoleKey, string> = {
-  ink: "#000022",
-  paper: "#dbe9ee",
-  gold: "#c4a35a",
-  teal: "#588b8b",
-  crimson: "#931f1d",
+  haze: "#f0f4f5",
+  twine: "#c4a35a",
+  botticelli: "#dbe9ee",
+  brick: "#931f1d",
+  zodiac: "#000022",
 };
 
 function randomHex() {
@@ -84,8 +84,7 @@ export function PaletteLab() {
   const [drafts, setDrafts] = useState<Record<RoleKey, string>>(DEFAULTS);
 
   const exportBlock = useMemo(
-    () =>
-      ROLES.map((role) => `${role.key}: ${colors[role.key]}`).join("\n"),
+    () => ROLES.map((role) => `${role.label}: ${colors[role.key]}`).join("\n"),
     [colors],
   );
 
@@ -98,15 +97,14 @@ export function PaletteLab() {
       }
     }
 
-    root.style.setProperty("--brass-2", mixHex(colors.gold, "#000000", 0.18));
-    root.style.setProperty("--teal-2", mixHex(colors.teal, "#000000", 0.18));
-    root.style.setProperty("--crimson-2", mixHex(colors.crimson, "#000000", 0.14));
-    root.style.setProperty("--ink-2", mixHex(colors.ink, "#ffffff", 0.12));
-    root.style.setProperty("--ink-3", mixHex(colors.ink, "#ffffff", 0.22));
-    root.style.setProperty("--stone", mixHex(colors.ink, colors.paper, 0.45));
-    root.style.setProperty("--mist", mixHex(colors.ink, colors.paper, 0.58));
-    root.style.setProperty("--line", `${colors.ink}1a`);
-    root.style.setProperty("--line-dark", `${colors.ink}1f`);
+    root.style.setProperty("--brass-2", mixHex(colors.twine, "#000000", 0.18));
+    root.style.setProperty("--crimson-2", mixHex(colors.brick, "#000000", 0.14));
+    root.style.setProperty("--ink-2", mixHex(colors.zodiac, "#ffffff", 0.12));
+    root.style.setProperty("--ink-3", mixHex(colors.zodiac, "#ffffff", 0.22));
+    root.style.setProperty("--stone", mixHex(colors.zodiac, colors.haze, 0.45));
+    root.style.setProperty("--mist", mixHex(colors.zodiac, colors.haze, 0.58));
+    root.style.setProperty("--line", `${colors.zodiac}1a`);
+    root.style.setProperty("--line-dark", `${colors.zodiac}1f`);
   }, [colors]);
 
   function setRole(key: RoleKey, value: string) {
@@ -117,8 +115,7 @@ export function PaletteLab() {
   }
 
   function randomizeRole(key: RoleKey) {
-    const next = randomHex();
-    setRole(key, next);
+    setRole(key, randomHex());
   }
 
   function randomizeAll() {
@@ -144,14 +141,14 @@ export function PaletteLab() {
   }
 
   return (
-    <section className="border-y border-[var(--line-dark)] bg-white">
+    <section className="relative z-10 border-y border-[var(--line-dark)] bg-white">
       <div className="container-wide py-14 md:py-16">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div className="max-w-2xl">
             <p className="text-xs uppercase tracking-[0.22em] text-gold">Palette lab</p>
-            <h2 className="mt-3 font-display text-4xl md:text-5xl">Tune the brand colors live.</h2>
+            <h2 className="mt-3 font-display text-4xl md:text-5xl">Locked board colors.</h2>
             <p className="mt-3 text-sm text-stone">
-              Randomize any role or paste a hex code. Changes apply instantly across the page.
+              Defaults match your palette board. Randomize or edit hexes to explore; Reset returns to the board.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
@@ -159,7 +156,7 @@ export function PaletteLab() {
               Randomize all
             </button>
             <button type="button" className="btn btn-ghost" onClick={resetDefaults}>
-              Reset
+              Reset to board
             </button>
             <button type="button" className="btn btn-outline" onClick={copyExport}>
               Copy hexes
@@ -197,19 +194,16 @@ export function PaletteLab() {
                     }}
                     onBlur={() => {
                       const normalized = normalizeHex(drafts[role.key]);
-                      if (normalized) {
-                        setRole(role.key, normalized);
-                      } else {
-                        setDrafts((prev) => ({ ...prev, [role.key]: colors[role.key] }));
-                      }
+                      if (normalized) setRole(role.key, normalized);
+                      else setDrafts((prev) => ({ ...prev, [role.key]: colors[role.key] }));
                     }}
                     spellCheck={false}
                     placeholder="#000000"
                   />
                 </label>
 
-                <div className="flex items-center gap-3">
-                  <label className="field flex-1">
+                <div className="grid gap-3 sm:grid-cols-[1fr_auto] sm:items-end">
+                  <label className="field">
                     <span>Picker</span>
                     <input
                       type="color"
@@ -221,7 +215,7 @@ export function PaletteLab() {
                   </label>
                   <button
                     type="button"
-                    className="btn btn-outline mt-5 py-2"
+                    className="btn btn-outline py-2"
                     onClick={() => randomizeRole(role.key)}
                   >
                     Random
@@ -232,7 +226,7 @@ export function PaletteLab() {
           ))}
         </div>
 
-        <pre className="mt-8 overflow-x-auto rounded-2xl border border-[var(--line-dark)] bg-ink p-5 text-sm text-white/85">
+        <pre className="mt-8 overflow-x-auto rounded-2xl border border-[var(--line-dark)] bg-zodiac p-5 text-sm text-white/85">
           {exportBlock}
         </pre>
       </div>

@@ -49,7 +49,7 @@ export default async function CheckoutSuccessPage({
       <SiteHeader variant="light" />
       <main className="container-rn py-20">
         <div className="card-panel mx-auto max-w-xl text-center">
-          <p className="text-xs uppercase tracking-[0.2em] text-brass-2">Payment confirmed</p>
+          <p className="text-xs uppercase tracking-[0.2em] text-gold">Payment confirmed</p>
           <h1 className="mt-3 font-display text-5xl">You&apos;re in.</h1>
           <p className="mt-4 text-[#4a5564]">
             Your {PRODUCT.name} access is active for two years. Head to your dashboard to begin.

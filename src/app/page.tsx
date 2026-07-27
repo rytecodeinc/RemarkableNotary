@@ -97,10 +97,10 @@ export default function HomePage() {
             {curriculum.map((item, index) => (
               <li
                 key={item}
-                className="hover-lift flex items-center justify-between gap-4 rounded-2xl border border-[var(--line-dark)] bg-paper px-5 py-4 transition hover:border-teal"
+                className="hover-lift flex items-center justify-between gap-4 rounded-2xl border border-[var(--line-dark)] bg-brand px-5 py-4 transition hover:border-gold"
               >
                 <span className="font-display text-2xl md:text-3xl">{item}</span>
-                <span className="text-xs tracking-[0.18em] text-teal">{String(index + 1).padStart(2, "0")}</span>
+                <span className="text-xs tracking-[0.18em] text-gold">{String(index + 1).padStart(2, "0")}</span>
               </li>
             ))}
           </ul>
@@ -109,7 +109,7 @@ export default function HomePage() {
 
       <section className="container-wide py-20 md:py-28">
         <div className="hover-zoom relative overflow-hidden rounded-[2rem] border border-[var(--line-dark)] bg-white">
-          <div className="zoom-target absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(196,163,90,0.18),transparent_42%),radial-gradient(circle_at_90%_80%,rgba(88,139,139,0.14),transparent_45%),linear-gradient(135deg,#e7f0f4,#dbe9ee)]" />
+          <div className="zoom-target absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(196,163,90,0.18),transparent_42%),radial-gradient(circle_at_90%_80%,rgba(219,233,238,0.9),transparent_45%),linear-gradient(135deg,#f0f4f5,#dbe9ee)]" />
           <div className="relative grid gap-8 p-8 md:grid-cols-[1.2fr_0.8fr] md:p-14">
             <div>
               <p className="text-xs uppercase tracking-[0.22em] text-gold">Begin</p>

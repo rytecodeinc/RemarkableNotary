@@ -2,27 +2,32 @@
 
 :root {
   /*
-    Palette roles
-    #000022  ink     — headings, body, primary dark UI
-    #dbe9ee  paper   — page background, soft panels
-    #c4a35a  gold    — brand accent only (eyebrows, rules, hover marks)
-    #588b8b  teal    — secondary actions, links, supporting UI
-    #931f1d  crimson — primary enroll CTAs (commitment / action)
+    Locked brand palette (from design board)
+    Black Haze   #f0f4f5  — light backgrounds
+    Twine        #c4a35a  — light accent (gold)
+    Botticelli   #dbe9ee  — main brand / soft panels
+    Old Brick    #931f1d  — dark accent / primary CTAs
+    Blue Zodiac  #000022  — dark shades / text / inverted sections
   */
-  --ink: #000022;
+  --haze: #f0f4f5;
+  --twine: #c4a35a;
+  --botticelli: #dbe9ee;
+  --brick: #931f1d;
+  --zodiac: #000022;
+
+  --ink: var(--zodiac);
   --ink-2: #1a1a3a;
   --ink-3: #2e2e4d;
   --stone: #4a5568;
-  --mist: #6b7c8a;
+  --mist: #7a8794;
   --ivory: #ffffff;
-  --paper: #dbe9ee;
+  --paper: var(--haze);
+  --brand: var(--botticelli);
   --surface: #ffffff;
-  --gold: #c4a35a;
-  --brass: #c4a35a;
+  --gold: var(--twine);
+  --brass: var(--twine);
   --brass-2: #a8873f;
-  --teal: #588b8b;
-  --teal-2: #467274;
-  --crimson: #931f1d;
+  --crimson: var(--brick);
   --crimson-2: #7a1917;
   --line: rgba(0, 0, 34, 0.1);
   --line-dark: rgba(0, 0, 34, 0.12);
@@ -40,14 +45,18 @@
   --color-mist: var(--mist);
   --color-ivory: var(--ivory);
   --color-paper: var(--paper);
+  --color-brand: var(--brand);
   --color-surface: var(--surface);
   --color-gold: var(--gold);
   --color-brass: var(--brass);
   --color-brass-2: var(--brass-2);
-  --color-teal: var(--teal);
-  --color-teal-2: var(--teal-2);
   --color-crimson: var(--crimson);
   --color-crimson-2: var(--crimson-2);
+  --color-haze: var(--haze);
+  --color-twine: var(--twine);
+  --color-botticelli: var(--botticelli);
+  --color-brick: var(--brick);
+  --color-zodiac: var(--zodiac);
   --font-sans: var(--font-body);
   --font-display: var(--font-display);
 }
@@ -114,9 +123,9 @@ a {
   transform: translateY(-1px);
 }
 
-/* Primary enroll / purchase — crimson */
+/* Old Brick — enroll / primary action */
 .btn-primary {
-  background: var(--crimson);
+  background: var(--brick);
   color: white;
 }
 
@@ -125,32 +134,32 @@ a {
   color: white;
 }
 
-/* Secondary — teal */
+/* Botticelli — secondary */
 .btn-secondary {
-  background: var(--teal);
-  color: white;
+  background: var(--botticelli);
+  color: var(--zodiac);
 }
 
 .btn-secondary:hover {
-  background: var(--teal-2);
-  color: white;
+  background: color-mix(in srgb, var(--botticelli) 82%, var(--zodiac));
+  color: var(--zodiac);
 }
 
 .btn-ghost {
-  border-color: rgba(0, 0, 34, 0.18);
+  border-color: rgba(0, 0, 34, 0.16);
   color: var(--ink);
   background: transparent;
 }
 
 .btn-ghost:hover {
-  border-color: var(--teal);
-  color: var(--teal-2);
-  background: rgba(88, 139, 139, 0.08);
+  border-color: var(--twine);
+  color: var(--zodiac);
+  background: rgba(196, 163, 90, 0.1);
 }
 
-/* Dark / default solid — navy */
+/* Blue Zodiac — solid dark */
 .btn-dark {
-  background: var(--ink);
+  background: var(--zodiac);
   color: white;
 }
 
@@ -159,20 +168,20 @@ a {
 }
 
 .btn-outline {
-  border-color: rgba(0, 0, 34, 0.18);
+  border-color: rgba(0, 0, 34, 0.16);
   color: var(--ink);
   background: transparent;
 }
 
 .btn-outline:hover {
-  background: var(--ink);
+  background: var(--zodiac);
   color: white;
-  border-color: var(--ink);
+  border-color: var(--zodiac);
 }
 
 .btn-gold {
-  background: var(--gold);
-  color: var(--ink);
+  background: var(--twine);
+  color: var(--zodiac);
 }
 
 .btn-gold:hover {
@@ -209,8 +218,8 @@ a {
 .field input:focus,
 .field textarea:focus,
 .field select:focus {
-  border-color: var(--teal);
-  box-shadow: 0 0 0 3px rgba(88, 139, 139, 0.2);
+  border-color: var(--twine);
+  box-shadow: 0 0 0 3px rgba(196, 163, 90, 0.22);
 }
 
 .card-panel {
@@ -260,19 +269,19 @@ a {
 
 .hero-grid-overlay {
   background:
-    radial-gradient(900px 480px at 10% 0%, color-mix(in srgb, var(--gold) 22%, transparent), transparent 55%),
-    radial-gradient(700px 420px at 92% 8%, color-mix(in srgb, var(--teal) 18%, transparent), transparent 50%),
+    radial-gradient(900px 480px at 10% 0%, color-mix(in srgb, var(--twine) 20%, transparent), transparent 55%),
+    radial-gradient(700px 420px at 92% 8%, color-mix(in srgb, var(--botticelli) 70%, transparent), transparent 50%),
     linear-gradient(
       180deg,
-      color-mix(in srgb, var(--paper) 70%, white) 0%,
-      var(--paper) 55%,
-      color-mix(in srgb, var(--paper) 88%, var(--ink)) 100%
+      color-mix(in srgb, var(--haze) 55%, white) 0%,
+      var(--haze) 45%,
+      var(--botticelli) 100%
     );
 }
 
 .nav-blur {
   backdrop-filter: blur(14px);
-  background: rgba(219, 233, 238, 0.88);
+  background: color-mix(in srgb, var(--haze) 88%, transparent);
   border-bottom: 1px solid var(--line-dark);
 }
 
