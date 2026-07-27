@@ -1,0 +1,89 @@
+import Link from "next/link";
+import { createClient } from "@/lib/supabase/server";
+import { formatDate } from "@/lib/utils";
+
+export default async function AdminHomePage() {
+  const supabase = await createClient();
+
+  const [
+    { count: courseCount },
+    { count: userCount },
+    { count: entitlementCount },
+    { data: recentEntitlements },
+  ] = await Promise.all([
+    supabase.from("courses").select("*", { count: "exact", head: true }),
+    supabase.from("profiles").select("*", { count: "exact", head: true }),
+    supabase.from("entitlements").select("*", { count: "exact", head: true }).eq("status", "active"),
+    supabase
+      .from("entitlements")
+      .select("id, access_ends_at, created_at, status, profiles(email, full_name)")
+      .order("created_at", { ascending: false })
+      .limit(8),
+  ]);
+
+  return (
+    <div className="grid gap-8">
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p className="text-xs uppercase tracking-[0.18em] text-stone">Dashboard</p>
+          <h1 className="mt-2 font-display text-4xl">Administration</h1>
+        </div>
+        <Link href="/admin/courses" className="btn btn-dark">
+          Manage courses
+        </Link>
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-3">
+        {[
+          { label: "Courses", value: courseCount ?? 0 },
+          { label: "Users", value: userCount ?? 0 },
+          { label: "Active entitlements", value: entitlementCount ?? 0 },
+        ].map((stat) => (
+          <div key={stat.label} className="card-panel">
+            <p className="text-xs uppercase tracking-[0.16em] text-stone">{stat.label}</p>
+            <p className="mt-3 font-display text-5xl">{stat.value}</p>
+          </div>
+        ))}
+      </div>
+
+      <section className="card-panel">
+        <h2 className="font-display text-3xl">Recent enrollments</h2>
+        <div className="mt-4 overflow-x-auto">
+          <table className="w-full min-w-[640px] text-left text-sm">
+            <thead className="text-xs uppercase tracking-[0.14em] text-stone">
+              <tr>
+                <th className="py-2 font-medium">Student</th>
+                <th className="py-2 font-medium">Status</th>
+                <th className="py-2 font-medium">Purchased</th>
+                <th className="py-2 font-medium">Access ends</th>
+              </tr>
+            </thead>
+            <tbody>
+              {(recentEntitlements ?? []).map((row) => {
+                const profile = row.profiles as unknown as { email?: string; full_name?: string } | null;
+                return (
+                  <tr key={row.id as string} className="border-t border-[var(--line-dark)]">
+                    <td className="py-3">
+                      <div>{profile?.full_name || "—"}</div>
+                      <div className="text-stone">{profile?.email}</div>
+                    </td>
+                    <td className="py-3 capitalize">{row.status as string}</td>
+                    <td className="py-3">{formatDate(row.created_at as string)}</td>
+                    <td className="py-3">{formatDate(row.access_ends_at as string)}</td>
+                  </tr>
+                );
+              })}
+              {(recentEntitlements ?? []).length === 0 ? (
+                <tr>
+                  <td colSpan={4} className="py-6 text-stone">
+                    No purchases yet.
+                  </td>
+                </tr>
+              ) : null}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  );
+}
