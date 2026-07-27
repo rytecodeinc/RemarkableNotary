@@ -50,7 +50,16 @@ npm install
 npm run dev
 ```
 
-7. Sign in once as `rina@rytecode.com` (magic link or Google). The DB trigger promotes that email to **admin**.
+7. Sign in once as `rinarasia@gmail.com` (magic link or Google). That email is the sole **admin**; all other accounts are **students** by default (including after checkout).
+
+## Roles
+
+| Role | Who | Lands on |
+|---|---|---|
+| `admin` | `rinarasia@gmail.com` only | `/admin` |
+| `student` | Everyone else (default) | `/learn` |
+
+Log in: `/login` → `/auth/callback` → role dashboard.
 
 ## Phase 1 product rules
 

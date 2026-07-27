@@ -9,15 +9,18 @@ import { createClient } from "@/lib/supabase/client";
 
 function LoginForm() {
   const params = useSearchParams();
-  const next = params.get("next") || "/learn";
+  const next = params.get("next") || "";
+  const authError = params.get("error");
   const [message, setMessage] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(
+    authError ? "Sign-in failed. Please try again." : null,
+  );
   const [pending, startTransition] = useTransition();
 
   function onMagicLink(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    formData.set("next", next);
+    if (next) formData.set("next", next);
     setError(null);
     setMessage(null);
     startTransition(async () => {
@@ -32,21 +35,28 @@ function LoginForm() {
 
   async function onGoogle() {
     setError(null);
-    const supabase = createClient();
-    const siteUrl = window.location.origin;
-    const { error: oauthError } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${siteUrl}/auth/callback?next=${encodeURIComponent(next)}`,
-      },
-    });
-    if (oauthError) setError(oauthError.message);
+    try {
+      const supabase = createClient();
+      const siteUrl = window.location.origin;
+      const redirectTo = next
+        ? `${siteUrl}/auth/callback?next=${encodeURIComponent(next)}`
+        : `${siteUrl}/auth/callback`;
+      const { error: oauthError } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: { redirectTo },
+      });
+      if (oauthError) setError(oauthError.message);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Google sign-in is unavailable.");
+    }
   }
 
   return (
     <div className="card-panel mx-auto w-full max-w-md">
-      <h1 className="font-display text-4xl">Welcome back</h1>
-      <p className="mt-2 text-sm text-stone">Sign in with a magic link or Google to access your courses.</p>
+      <h1 className="font-display text-4xl">Log in</h1>
+      <p className="mt-2 text-sm text-stone">
+        Students access the learning dashboard. The admin account opens the course manager.
+      </p>
 
       <form onSubmit={onMagicLink} className="mt-8 grid gap-4">
         <label className="field">
@@ -72,7 +82,7 @@ function LoginForm() {
       {error ? <p className="mt-4 text-sm text-red-700">{error}</p> : null}
 
       <p className="mt-6 text-sm text-stone">
-        New here? <Link href="/pricing" className="underline">View enrollment</Link>
+        New student? <Link href="/pricing" className="underline">Enroll to get access</Link>
       </p>
     </div>
   );

@@ -1,14 +1,21 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getActiveEntitlement, getCurrentProfile } from "@/lib/access";
+import { homePathForRole } from "@/lib/constants";
 import { createClient } from "@/lib/supabase/server";
+import { formatDate } from "@/lib/utils";
 import type { Course, LessonProgress } from "@/lib/types";
 
 export default async function LearnHomePage() {
   const profile = await getCurrentProfile();
-  if (!profile) redirect("/login");
+  if (!profile) redirect("/login?next=/learn");
 
-  const entitlement = profile.role === "admin" ? true : await getActiveEntitlement(profile.id);
+  // Admins belong in the admin dashboard; keep /learn for students.
+  if (profile.role === "admin") {
+    redirect(homePathForRole("admin"));
+  }
+
+  const entitlement = await getActiveEntitlement(profile.id);
   const supabase = await createClient();
 
   const { data: courses } = await supabase
@@ -62,17 +69,26 @@ export default async function LearnHomePage() {
         <p className="mt-3 max-w-2xl text-mist/80">
           {entitlement
             ? `Continue your California notary training. ${completedCount} lesson${completedCount === 1 ? "" : "s"} completed so far.`
-            : "Purchase the CA Notary Course to unlock lessons, videos, and resources."}
+            : "Your account is ready. Purchase the CA Notary Course to unlock lessons, videos, and resources."}
         </p>
+        {entitlement ? (
+          <p className="mt-3 text-sm text-mist/70">
+            Access active until {formatDate(entitlement.access_ends_at)}
+          </p>
+        ) : null}
         <div className="mt-6 flex flex-wrap gap-3">
           {resumeHref ? (
             <Link href={resumeHref} className="btn btn-primary">
               Resume last lesson
             </Link>
           ) : null}
-          {!entitlement && profile.role !== "admin" ? (
+          {!entitlement ? (
             <Link href="/pricing" className="btn btn-primary">
               Get access
+            </Link>
+          ) : courseList[0] ? (
+            <Link href={`/learn/courses/${courseList[0].id}`} className="btn btn-ghost">
+              Browse courses
             </Link>
           ) : null}
         </div>
@@ -84,21 +100,33 @@ export default async function LearnHomePage() {
           <p className="text-sm text-stone">{courseList.length} published</p>
         </div>
 
-        {courseList.length === 0 ? (
+        {!entitlement ? (
+          <div className="card-panel">
+            <p className="font-display text-2xl">Membership required</p>
+            <p className="mt-2 text-sm text-stone">
+              Log in worked — you are a student account. Complete checkout to unlock the curriculum.
+            </p>
+            <Link href="/pricing" className="btn btn-dark mt-5 inline-flex">
+              View enrollment
+            </Link>
+          </div>
+        ) : courseList.length === 0 ? (
           <div className="card-panel text-sm text-stone">
-            No published courses yet. Check back soon{profile.role === "admin" ? ", or publish courses in Admin" : ""}.
+            No published courses yet. Check back soon.
           </div>
         ) : (
           <div className="grid gap-4 md:grid-cols-2">
             {courseList.map((course) => (
               <Link
                 key={course.id}
-                href={entitlement || profile.role === "admin" ? `/learn/courses/${course.id}` : "/pricing"}
+                href={`/learn/courses/${course.id}`}
                 className="hover-lift card-panel block"
               >
                 <p className="text-xs uppercase tracking-[0.16em] text-stone">Course</p>
                 <h3 className="mt-2 font-display text-3xl">{course.title}</h3>
-                <p className="mt-2 line-clamp-3 text-sm text-[#4a5564]">{course.description || "Open curriculum"}</p>
+                <p className="mt-2 line-clamp-3 text-sm text-[#4a5564]">
+                  {course.description || "Open curriculum"}
+                </p>
               </Link>
             ))}
           </div>

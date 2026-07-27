@@ -2,7 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { formatDate } from "@/lib/utils";
 import { getActiveEntitlement, getCurrentProfile } from "@/lib/access";
-import { PRODUCT } from "@/lib/constants";
+import { PRODUCT, homePathForRole } from "@/lib/constants";
 import { SiteFooter, SiteHeader } from "@/components/marketing/site-chrome";
 import { signOut } from "@/app/actions";
 
@@ -11,6 +11,7 @@ export default async function AccountPage() {
   if (!profile) redirect("/login?next=/account");
 
   const entitlement = await getActiveEntitlement(profile.id);
+  const home = homePathForRole(profile.role);
 
   return (
     <div className="min-h-screen bg-paper text-ink">
@@ -20,19 +21,37 @@ export default async function AccountPage() {
         <div className="mt-8 grid gap-4 md:grid-cols-2">
           <section className="card-panel">
             <p className="text-xs uppercase tracking-[0.16em] text-stone">Profile</p>
-            <p className="mt-3 text-lg">{profile.full_name || "Student"}</p>
+            <p className="mt-3 text-lg">{profile.full_name || "—"}</p>
             <p className="text-sm text-stone">{profile.email}</p>
-            <p className="mt-2 text-sm capitalize text-stone">Role: {profile.role}</p>
-            <form action={signOut} className="mt-6">
-              <button type="submit" className="btn btn-outline">
-                Sign out
-              </button>
-            </form>
+            <p className="mt-2 text-sm capitalize text-stone">
+              Role: {profile.role}
+              {profile.role === "admin" ? " (sole admin account)" : " (default for checkout)"}
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link href={home} className="btn btn-dark">
+                Open dashboard
+              </Link>
+              <form action={signOut}>
+                <button type="submit" className="btn btn-outline">
+                  Sign out
+                </button>
+              </form>
+            </div>
           </section>
 
           <section className="card-panel">
             <p className="text-xs uppercase tracking-[0.16em] text-stone">Membership</p>
-            {entitlement ? (
+            {profile.role === "admin" ? (
+              <>
+                <p className="mt-3 font-display text-3xl">Admin access</p>
+                <p className="mt-2 text-sm text-stone">
+                  Manage courses, uploads, and student enrollments.
+                </p>
+                <Link href="/admin" className="btn btn-dark mt-6 inline-flex">
+                  Open admin dashboard
+                </Link>
+              </>
+            ) : entitlement ? (
               <>
                 <p className="mt-3 font-display text-3xl">{PRODUCT.name}</p>
                 <p className="mt-2 text-sm text-stone">
@@ -40,14 +59,6 @@ export default async function AccountPage() {
                 </p>
                 <Link href="/learn" className="btn btn-dark mt-6 inline-flex">
                   Go to courses
-                </Link>
-              </>
-            ) : profile.role === "admin" ? (
-              <>
-                <p className="mt-3 font-display text-3xl">Admin access</p>
-                <p className="mt-2 text-sm text-stone">Admins can preview all published curriculum.</p>
-                <Link href="/admin" className="btn btn-dark mt-6 inline-flex">
-                  Open admin
                 </Link>
               </>
             ) : (

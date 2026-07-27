@@ -21,9 +21,6 @@ export default async function LearnLayout({ children }: { children: React.ReactN
             <nav className="hidden gap-4 text-sm text-stone md:flex">
               <Link href="/learn" className="hover:text-ink">My courses</Link>
               <Link href="/account" className="hover:text-ink">Account</Link>
-              {profile.role === "admin" ? (
-                <Link href="/admin" className="hover:text-ink">Admin</Link>
-              ) : null}
             </nav>
           </div>
           <div className="flex items-center gap-3 text-sm">

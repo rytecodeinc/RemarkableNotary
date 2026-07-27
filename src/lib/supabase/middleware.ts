@@ -1,5 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { homePathForRole, isAdminEmail } from "@/lib/constants";
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
@@ -33,11 +34,11 @@ export async function updateSession(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   const pathname = request.nextUrl.pathname;
-  const isAuthRoute = pathname.startsWith("/login") || pathname.startsWith("/auth");
   const isProtected =
     pathname.startsWith("/learn") ||
     pathname.startsWith("/admin") ||
     pathname.startsWith("/account") ||
+    pathname.startsWith("/dashboard") ||
     pathname.startsWith("/checkout");
 
   if (!user && isProtected) {
@@ -47,28 +48,41 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(redirectUrl);
   }
 
-  if (user && pathname === "/login") {
-    const redirectUrl = request.nextUrl.clone();
-    redirectUrl.pathname = "/learn";
-    return NextResponse.redirect(redirectUrl);
-  }
-
-  if (user && pathname.startsWith("/admin")) {
+  if (user) {
     const { data: profile } = await supabase
       .from("profiles")
-      .select("role")
+      .select("role, email")
       .eq("id", user.id)
       .maybeSingle();
 
-    if (profile?.role !== "admin") {
+    const role =
+      profile?.role === "admin" || isAdminEmail(user.email || profile?.email)
+        ? "admin"
+        : "student";
+
+    if (pathname === "/login" || pathname === "/dashboard") {
+      const next = request.nextUrl.searchParams.get("next");
       const redirectUrl = request.nextUrl.clone();
-      redirectUrl.pathname = "/learn";
+      if (next?.startsWith("/") && !next.startsWith("//")) {
+        if (next.startsWith("/admin") && role !== "admin") {
+          redirectUrl.pathname = homePathForRole(role);
+          redirectUrl.search = "";
+        } else {
+          redirectUrl.href = new URL(next, request.nextUrl.origin).toString();
+        }
+      } else {
+        redirectUrl.pathname = homePathForRole(role);
+        redirectUrl.search = "";
+      }
       return NextResponse.redirect(redirectUrl);
     }
-  }
 
-  if (user && isAuthRoute === false) {
-    // no-op: session refreshed via getUser()
+    if (pathname.startsWith("/admin") && role !== "admin") {
+      const redirectUrl = request.nextUrl.clone();
+      redirectUrl.pathname = "/learn";
+      redirectUrl.search = "";
+      return NextResponse.redirect(redirectUrl);
+    }
   }
 
   return supabaseResponse;

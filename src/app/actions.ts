@@ -15,7 +15,7 @@ export async function signOut() {
 
 export async function sendMagicLink(formData: FormData) {
   const email = String(formData.get("email") || "").trim().toLowerCase();
-  const next = String(formData.get("next") || "/learn");
+  const next = String(formData.get("next") || "");
 
   if (!email) {
     return { error: "Email is required." };
@@ -23,11 +23,14 @@ export async function sendMagicLink(formData: FormData) {
 
   const supabase = await createClient();
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "http://localhost:3000";
+  const redirectTo = next
+    ? `${siteUrl}/auth/callback?next=${encodeURIComponent(next)}`
+    : `${siteUrl}/auth/callback`;
 
   const { error } = await supabase.auth.signInWithOtp({
     email,
     options: {
-      emailRedirectTo: `${siteUrl}/auth/callback?next=${encodeURIComponent(next)}`,
+      emailRedirectTo: redirectTo,
     },
   });
 

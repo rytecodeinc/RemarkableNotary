@@ -147,7 +147,7 @@ security definer
 set search_path = public
 as $$
 declare
-  admin_email constant text := 'rina@rytecode.com';
+  admin_email constant text := 'rinarasia@gmail.com';
   assigned_role text := 'student';
 begin
   if lower(new.email) = admin_email then
